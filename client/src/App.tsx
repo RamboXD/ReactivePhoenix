@@ -2,22 +2,25 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Registration from "./pages/Registration/Registration";
-import { useEffect } from "react";
-import { checkAuth } from "./store/reducers/useAuth";
-import { useAppDispatch } from "./hooks/redux";
+import { useSelector } from "react-redux";
+// import { useEffect } from "react";
+// import { checkAuth } from "./store/reducers/useAuth";
+// import { useAppDispatch } from "./hooks/redux";
 
 const App = () => {
-  const dispatch = useAppDispatch();
+  const isAuth = useSelector((state: any) => state.authReducer.isAuth);
+  // console.log(isAuth);
+  // const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      dispatch(checkAuth());
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (localStorage.getItem("token")) {
+  //     dispatch(checkAuth());
+  //   }
+  // }, []);
 
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={isAuth ? <Home /> : <Login />} />
       <Route path="/login" element={<Login />} />
       <Route path="/registration" element={<Registration />} />
     </Routes>

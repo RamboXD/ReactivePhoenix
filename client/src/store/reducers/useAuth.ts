@@ -15,6 +15,7 @@ export const login = createAsyncThunk(
   async function (userData: UserData) {
     const { email, password } = userData;
     const response = await AuthService.login(email, password);
+    console.log(response);
     return response;
   }
 );
@@ -63,7 +64,7 @@ export const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(login.fulfilled, (state, { payload }) => {
-        localStorage.setItem("token", payload.data.accessToken);
+        localStorage.setItem("token", payload.data.token);
         state.isAuth = true;
         state.user = payload.data.user;
       })
@@ -71,7 +72,7 @@ export const authSlice = createSlice({
         console.log("login failed: Info -> ", state, payload);
       })
       .addCase(registration.fulfilled, (state, { payload }) => {
-        localStorage.setItem("token", payload.data.accessToken);
+        localStorage.setItem("token", payload.data.token);
         state.isAuth = true;
         state.user = payload.data.user;
       })
@@ -87,7 +88,7 @@ export const authSlice = createSlice({
         console.log("logout failed: Info -> ", state, payload);
       })
       .addCase(checkAuth.fulfilled, (state, { payload }) => {
-        localStorage.setItem("token", payload.data.accessToken);
+        localStorage.setItem("token", payload.data.token);
         state.isAuth = true;
         state.user = payload.data.user;
       })

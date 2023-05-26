@@ -25,8 +25,10 @@ defmodule ServerWeb.AccountJSON do
 
   def account_token(%{account: account, token: token}) do
     %{
-      id: account.id,
-      email: account.email,
+      user: %{
+        email: account.email,
+        id: account.id
+      },
       token: token
     }
   end
