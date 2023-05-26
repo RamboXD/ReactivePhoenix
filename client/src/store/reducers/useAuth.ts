@@ -14,8 +14,8 @@ export const login = createAsyncThunk(
   "auth/login",
   async function (userData: UserData) {
     const { email, password } = userData;
+    // console.log(userData);
     const response = await AuthService.login(email, password);
-    console.log(response);
     return response;
   }
 );
@@ -80,7 +80,7 @@ export const authSlice = createSlice({
         console.log("registration failed: Info -> ", state, payload);
       })
       .addCase(logout.fulfilled, (state) => {
-        localStorage.removeItem("token");
+        localStorage.clear();
         state.isAuth = false;
         state.user = {} as IUser;
       })

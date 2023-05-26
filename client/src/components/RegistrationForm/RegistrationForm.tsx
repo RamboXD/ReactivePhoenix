@@ -1,30 +1,46 @@
 import { useState } from "react";
-import { login } from "../../store/reducers/useAuth";
+import { registration } from "../../store/reducers/useAuth";
 import { useAppDispatch } from "../../hooks/redux";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const LoginForm: React.FC = () => {
+const RegistrationForm: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const isAuth = useSelector((state: any) => state.authReducer.isAuth);
-
   const [password, setPassword] = useState<string>("");
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const buttonHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
+  const buttonHandlerRegister = async (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
     event.preventDefault();
-    // console.log("clicked");
-    await dispatch(login({ email, password }));
+    await dispatch(registration({ email, password }));
     if (isAuth) {
       navigate("/");
     }
   };
 
   return (
+    // <div>
+    //   <input
+    //     onChange={(e) => setEmail(e.target.value)}
+    //     value={email}
+    //     type="text"
+    //     placeholder="email"
+    //   />
+    //   <input
+    //     onChange={(e) => setPassword(e.target.value)}
+    //     value={password}
+    //     type="password"
+    //     placeholder="password"
+    //   />
+    //   <button onClick={buttonHandler}>Логин</button>
+    //   <button onClick={buttonHandlerRegister}>Регистрация</button>
+    // </div>
     <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
       <div className="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-xl">
-        <h1 className="text-3xl font-semibold text-center text-pur-700 underline">
-          Sign in
+        <h1 className="text-3xl font-semibold text-center text-black-700 underline">
+          Sign up
         </h1>
         <form className="mt-6">
           <div className="mb-2">
@@ -54,22 +70,22 @@ const LoginForm: React.FC = () => {
           </a>
           <div className="mt-6">
             <button
-              onClick={buttonHandler}
+              onClick={buttonHandlerRegister}
               className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600"
             >
-              Login
+              Register
             </button>
           </div>
         </form>
 
         <p className="mt-8 text-xs font-light text-center text-gray-700">
           {" "}
-          Don't have an account?{" "}
+          Does have an account?{" "}
           <a
-            href="/registration"
+            href="/login"
             className="font-medium text-black-600 hover:underline"
           >
-            Sign up
+            Sign in
           </a>
         </p>
       </div>
@@ -77,4 +93,4 @@ const LoginForm: React.FC = () => {
   );
 };
 
-export default LoginForm;
+export default RegistrationForm;
